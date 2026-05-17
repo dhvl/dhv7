@@ -5,22 +5,36 @@ import SelectedWork from '@/components/SelectedWork';
 import Philosophy from '@/components/Philosophy';
 import Contact from '@/components/Contact';
 
+import Image from 'next/image';
+
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-black text-white">
       <Navbar />
-      <Hero />
-      <Expertise />
-      <SelectedWork />
-      <Philosophy />
-      <Contact />
+      
+      {/* Content wrapper taking up remaining space to push footer down */}
+      <main className="flex-grow">
+        <Hero />
+        <Expertise />
+        <SelectedWork />
+        <Philosophy />
+        <Contact />
+      </main>
       
       {/* Premium Branded Footer */}
-      <footer className="border-t border-white/5 bg-zinc-950/20 backdrop-blur-md py-12 text-zinc-500 text-sm">
+      <footer className="border-t border-white/5 bg-zinc-950/20 backdrop-blur-md py-12 text-zinc-500 text-sm w-full">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-6 gap-6">
-          <div className="flex flex-col items-center md:items-start gap-2">
+          <div className="flex items-center gap-3">
+            <div className="relative w-8 h-8 overflow-hidden flex items-center justify-center">
+              <Image 
+                src="/assets/dhv7-logo-icon.png" 
+                alt="DHV7 Logo" 
+                width={32} 
+                height={32} 
+                className="object-contain"
+              />
+            </div>
             <span className="font-heading font-bold text-lg text-white tracking-widest">DHV7</span>
-            <p className="text-xs text-zinc-600">Built with next-generation design systems and absolute technical alignment.</p>
           </div>
           <div className="flex flex-col md:flex-row gap-6 items-center">
             <p className="text-zinc-600 text-xs">© {new Date().getFullYear()} Dhaval Vadgama. All rights reserved.</p>
@@ -31,6 +45,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </main>
+    </div>
   );
 }
