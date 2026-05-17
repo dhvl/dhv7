@@ -288,7 +288,7 @@ export default function SchedulerModal({ isOpen, onClose, isDarkMode = true }: S
               {/* 🟢 Bottom: Send a WhatsApp button (Breathing) */}
               <div className="pt-6 mt-6 border-t border-white/5 w-full">
                 <a
-                  href={`https://wa.me/918128181213?text=Hi%2C%20I%20just%20saw%20your%20profile%20on%20dhv7.com%20and%20would%2520like%2520to%2520align%2520on%2520${encodeURIComponent(selectedServices.join(', '))}`}
+                  href={`https://wa.me/918128181213?text=${encodeURIComponent(`Hi, I just saw your profile on dhv7.com and would like to align on ${selectedServices.join(', ')}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full h-11 rounded-full font-bold text-xs sm:text-sm tracking-wide bg-[#25D366] text-white flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] animate-whatsapp-breathe cursor-pointer"
