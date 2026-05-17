@@ -15,6 +15,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Dhaval Vadgama | Systems & AI Engineer, Branding Expert",
   description: "Personal portfolio of Dhaval Vadgama, a Systems Engineer building scalable products, a Branding Expert obsessed with premium UI/UX, and an AI Engineer pushing boundaries.",
+  icons: {
+    icon: "/assets/dhv7-logo-icon-3jpg.jpg",
+  },
 };
 
 export default function RootLayout({
