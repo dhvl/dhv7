@@ -28,9 +28,11 @@ export default function RootLayout({
       className={`${inter.variable} ${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-black text-white relative" suppressHydrationWarning>
-        {/* Global ambient glow */}
-        <div className="glow-bg top-[-20vw] left-[-10vw]" />
-        <div className="glow-bg bottom-[-20vw] right-[-10vw] !bg-violet-500/20" />
+        {/* Global ambient glow inside an overflow-hidden wrapper to prevent bottom scroll stretching */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+          <div className="glow-bg top-[-20vw] left-[-10vw]" />
+          <div className="glow-bg bottom-[-20vw] right-[-10vw] !bg-violet-500/20" />
+        </div>
         
         {children}
       </body>
