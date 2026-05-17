@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #3b82f6; /* Blue 500 */
+  --color-brand-glow: rgba(59, 130, 246, 0.5);
+  --color-accent: #8b5cf6; /* Violet 500 */
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-surface-hover: rgba(255, 255, 255, 0.05);
+  --font-sans: "Inter", sans-serif;
+  --font-heading: "Outfit", sans-serif;
+}
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: var(--color-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+}
+
+.glass-nav {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Gradients and Glows */
+.text-gradient {
+  background: linear-gradient(to right, #ffffff, #a1a1aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-gradient {
+  background: linear-gradient(135deg, var(--color-brand), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-bg {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, var(--color-brand-glow) 0%, transparent 60%);
+  filter: blur(100px);
+  opacity: 0.15;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
