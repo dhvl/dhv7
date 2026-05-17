@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import InquiryModal from '@/components/InquiryModal';
+import SchedulerModal from '@/components/SchedulerModal';
 
 // --- Static Testimonials Data ---
 const testimonialsRow1 = [
@@ -96,135 +97,10 @@ const faqData = [
 
 export default function Concept1() {
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
+  const [isSchedulerOpen, setIsSchedulerOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-  // Direct Meet Custom Booking states
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [bookingForm, setBookingForm] = useState({ name: '', email: '', company: '', notes: '' });
-  const [bookingStatus, setBookingStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
-  const [meetLink, setMeetLink] = useState('');
-  const [userTimeZone, setUserTimeZone] = useState('Asia/Kolkata');
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        if (detected) {
-          setUserTimeZone(detected);
-        }
-      } catch (e) {
-        console.error("TimeZone detection error:", e);
-      }
-    }
-  }, []);
-
-  // Custom booking calendar calculations
-  const handlePrevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
-  };
-  
-  const handleNextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
-  };
-
-  const getDaysInMonth = (y: number, m: number) => {
-    return new Date(y, m + 1, 0).getDate();
-  };
-
-  const getFirstDayOfMonth = (y: number, m: number) => {
-    return new Date(y, m, 1).getDay();
-  };
-
-  const yearNum = currentDate.getFullYear();
-  const monthNum = currentDate.getMonth();
-  const daysInMonth = getDaysInMonth(yearNum, monthNum);
-  const firstDay = getFirstDayOfMonth(yearNum, monthNum);
-
-  // Generate days grid array
-  const daysArray: (Date | null)[] = [];
-  for (let i = 0; i < firstDay; i++) {
-    daysArray.push(null);
-  }
-  for (let d = 1; d <= daysInMonth; d++) {
-    daysArray.push(new Date(yearNum, monthNum, d));
-  }
-
-  const getAvailableSlots = (date: Date | null) => {
-    if (!date) return [];
-    
-    // Check if the selected date (in local browser calendar) is a weekend
-    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-    
-    // Dhaval's native availability hours in Asia/Kolkata timezone:
-    // Weekdays: 7:00 PM - 11:00 PM (19:00, 20:00, 21:00, 22:00 starting hours for 60-min slots)
-    // Weekends: 11:00 AM - 11:00 PM (11:00 to 22:00 starting hours for 60-min slots)
-    const kolkataHours = isWeekend 
-      ? [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
-      : [19, 20, 21, 22];
-
-    const slots: string[] = [];
-    
-    kolkataHours.forEach(hour => {
-      // Construct a Date object representing the slot time in Kolkata timezone (+05:30)
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      const hh = String(hour).padStart(2, '0');
-      const isoStr = `${year}-${month}-${day}T${hh}:00:00+05:30`;
-      const slotDate = new Date(isoStr);
-      
-      // Format to user's native timezone
-      const formattedTime = slotDate.toLocaleTimeString([], {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
-      });
-      
-      // Check if slot shifts day in user's timezone relative to selected browser date
-      let dayBadge = '';
-      if (slotDate.getDate() !== date.getDate()) {
-        const diffTime = slotDate.getTime() - date.getTime();
-        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
-        if (diffDays > 0) {
-          dayBadge = ' (+1d)';
-        } else if (diffDays < 0) {
-          dayBadge = ' (-1d)';
-        }
-      }
-      
-      slots.push(`${formattedTime}${dayBadge}`);
-    });
-    
-    return slots;
-  };
-
-  const monthNames = [
-    "January", "February", "March", "April", "May", "June", 
-    "July", "August", "September", "October", "November", "December"
-  ];
-
-  const handleBookingSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!bookingForm.name || !bookingForm.email || !bookingForm.notes) return;
-    setBookingStatus('submitting');
-    setTimeout(() => {
-      const randomId = Math.random().toString(36).substring(2, 5) + "-" + 
-                       Math.random().toString(36).substring(2, 6) + "-" + 
-                       Math.random().toString(36).substring(2, 5);
-      setMeetLink(`meet.google.com/${randomId}`);
-      setBookingStatus('success');
-    }, 1500);
-  };
-
-  const handleResetBooking = () => {
-    setSelectedTime(null);
-    setBookingForm({ name: '', email: '', company: '', notes: '' });
-    setBookingStatus('idle');
-  };
 
   // Dynamic experience calculation
   const totalExperience = new Date().getFullYear() - 2011;
@@ -913,373 +789,48 @@ export default function Concept1() {
               <Calendar className="w-3 h-3 animate-pulse" /> DISCOVERY SESSION
             </span>
             <h2 className={`text-3xl sm:text-5xl font-bold tracking-tight mt-4 transition-colors ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-              Book a Discovery Call
+              Establish Systems Alignment
             </h2>
             <p className={`text-sm sm:text-base mt-2 max-w-xl transition-colors ${isDarkMode ? 'text-zinc-400' : 'text-slate-500'}`}>
-              Select an available date and time slot to establish direct systems architecture alignment via a Google Meet session.
+              Ready to map out your product vision, brand goals, or technical systems orchestration? Instantly launch a discovery session scheduling console.
             </p>
           </div>
 
-          <div className={`w-full max-w-5xl rounded-3xl border backdrop-blur-xl shadow-2xl overflow-hidden transition-all duration-500 grid grid-cols-1 lg:grid-cols-12 ${isDarkMode ? 'border-white/5 bg-[#090e1a]/80 shadow-cyan-950/20' : 'border-slate-200 bg-white shadow-slate-100'}`}>
+          <div className={`w-full max-w-4xl rounded-3xl border backdrop-blur-xl shadow-2xl overflow-hidden p-8 sm:p-12 relative flex flex-col md:flex-row items-center gap-8 justify-between transition-all duration-500 ${isDarkMode ? 'border-white/5 bg-[#090e1a]/80 shadow-cyan-950/20' : 'border-slate-200 bg-white shadow-slate-100'}`}>
             
-            {/* Left Panel: Direct Session Context Details */}
-            <div className={`p-8 lg:p-10 lg:col-span-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r transition-colors ${isDarkMode ? 'border-white/5 text-white bg-zinc-950/40' : 'border-slate-100 text-slate-800 bg-slate-50/50'}`}>
+            {/* Ambient Background Lights */}
+            <div className="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-[#00C3FF]/10 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-12 -right-12 w-48 h-48 rounded-full bg-[#FFE600]/10 blur-3xl pointer-events-none" />
+
+            <div className="flex flex-col sm:flex-row items-center gap-6 relative z-10 text-center sm:text-left">
+              <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-[#00C3FF]">
+                <Image 
+                  src="/assets/profile-picture-dhaval-sqr.png" 
+                  alt="Dhaval Vadgama avatar"
+                  fill
+                  className="object-cover animate-whatsapp-breathe"
+                />
+              </div>
               <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#00C3FF]">
-                    <Image 
-                      src="/assets/profile-picture-dhaval-sqr.png" 
-                      alt="Dhaval Vadgama avatar"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-[#00C3FF] tracking-wider block">Lead Systems Architect</span>
-                    <h4 className="text-sm font-bold">Dhaval Vadgama</h4>
-                    <span className="inline-flex items-center gap-1 mt-0.5 text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
-                      <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" /> Available Online
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight">60-Min Technical & Design Alignment</h3>
-                  <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-zinc-400' : 'text-slate-500'}`}>
-                    An intensive discovery workshop to map out system requirements, outline backend pipelines, evaluate UI visual fidelity benchmarks, and review project timelines.
-                  </p>
-                </div>
-
-                <div className="mt-8 space-y-3">
-                  <div className="flex items-center gap-2.5 text-xs font-semibold">
-                    <Clock className="w-4 h-4 text-[#00C3FF]" />
-                    <span>60 Minutes Duration</span>
-                  </div>
-                  <div className="flex items-center gap-2.5 text-xs font-semibold">
-                    <Video className="w-4 h-4 text-[#00C3FF]" />
-                    <span>Google Meet</span>
-                  </div>
+                <span className="text-[10px] uppercase font-bold text-[#00C3FF] tracking-wider block">Lead Systems Architect</span>
+                <h4 className={`text-xl font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Dhaval Vadgama</h4>
+                <p className={`text-xs mt-1.5 max-w-md ${isDarkMode ? 'text-zinc-400' : 'text-slate-500'}`}>
+                  Schedule a timezone-localized 60-minute systems consultation to align technical objectives, visual fidelity specifications, and full-stack development.
+                </p>
+                <div className="flex flex-wrap justify-center sm:justify-start gap-4 mt-4 text-[10px] uppercase font-bold tracking-wider text-zinc-500">
+                  <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#00C3FF]" /> 60m Duration</span>
+                  <span className="flex items-center gap-1.5"><Video className="w-3.5 h-3.5 text-[#00C3FF]" /> Google Meet</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Panel: Calendar Grid & Form Step Controllers */}
-            <div className="p-8 lg:p-10 lg:col-span-7 flex flex-col justify-center">
-              <AnimatePresence mode="wait">
-                
-                {bookingStatus === 'idle' && (
-                  <motion.div
-                    key="scheduler"
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: 0.3 }}
-                    className="space-y-6"
-                  >
-                    {!selectedTime ? (
-                      <div>
-                        {/* Step 1: Calendar View */}
-                        <div className="flex items-center justify-between mb-6">
-                          <div>
-                            <span className="text-[10px] uppercase font-bold tracking-wider text-[#00C3FF] block">Step 01 of 02</span>
-                            <h4 className="text-lg font-bold">Select Date & Time</h4>
-                          </div>
-                          
-                          {/* Calendar Navigation */}
-                          <div className="flex items-center gap-2">
-                            <button 
-                              onClick={handlePrevMonth}
-                              className={`p-2 rounded-full border transition-all ${isDarkMode ? 'border-white/10 hover:bg-white/5' : 'border-slate-200 hover:bg-slate-50'}`}
-                            >
-                              <ChevronRight className="w-4 h-4 rotate-180" />
-                            </button>
-                            <span className="text-xs font-extrabold uppercase tracking-wider min-w-[90px] text-center">
-                              {monthNames[monthNum]} {yearNum}
-                            </span>
-                            <button 
-                              onClick={handleNextMonth}
-                              className={`p-2 rounded-full border transition-all ${isDarkMode ? 'border-white/10 hover:bg-white/5' : 'border-slate-200 hover:bg-slate-50'}`}
-                            >
-                              <ChevronRight className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Calendar Grid */}
-                        <div className="grid grid-cols-7 gap-1.5 text-center text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">
-                          <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-                        </div>
-                        <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-6">
-                          {daysArray.map((dateItem, idx) => {
-                            if (!dateItem) return <div key={`empty-${idx}`} />;
-                            
-                            const isToday = dateItem.toDateString() === new Date().toDateString();
-                            const isSelected = selectedDate ? dateItem.toDateString() === selectedDate.toDateString() : false;
-                            
-                            // Check if date is in past
-                            const todayCheck = new Date();
-                            todayCheck.setHours(0, 0, 0, 0);
-                            const isPastDate = dateItem.getTime() < todayCheck.getTime();
-                            const isWeekend = dateItem.getDay() === 0 || dateItem.getDay() === 6;
-
-                            return (
-                              <button
-                                key={`day-${idx}`}
-                                disabled={isPastDate}
-                                onClick={() => {
-                                  setSelectedDate(dateItem);
-                                  setSelectedTime(null);
-                                }}
-                                className={`aspect-square w-full rounded-full flex flex-col items-center justify-center text-xs font-semibold relative transition-all duration-300 ${
-                                  isSelected 
-                                    ? 'bg-[#00C3FF] text-black font-extrabold shadow-lg shadow-[#00C3FF]/30 scale-105' 
-                                    : isPastDate 
-                                      ? 'text-zinc-600 opacity-20 cursor-not-allowed' 
-                                      : isDarkMode 
-                                        ? 'text-white hover:bg-white/5' 
-                                        : 'text-slate-800 hover:bg-slate-100'
-                                }`}
-                              >
-                                <span>{dateItem.getDate()}</span>
-                                {isToday && !isSelected && (
-                                  <span className="absolute bottom-1 w-1 h-1 rounded-full bg-[#00C3FF]" />
-                                )}
-                                {isWeekend && !isPastDate && !isSelected && (
-                                  <span className="absolute top-1 right-1 text-[8px] opacity-40 font-bold">WE</span>
-                                )}
-                              </button>
-                            );
-                          })}
-                        </div>
-
-                        {/* Step 2: Time Slots Strip */}
-                        {selectedDate && (
-                          <div className="space-y-3 pt-4 border-t transition-colors border-white/5">
-                            <span className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-400 block">
-                              Available slots for {selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
-                            </span>
-                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-[140px] overflow-y-auto pr-1">
-                              {getAvailableSlots(selectedDate).map((time, i) => (
-                                <button
-                                  key={`slot-${i}`}
-                                  onClick={() => setSelectedTime(time)}
-                                  className={`py-2 rounded-xl text-xs font-bold transition-all duration-300 border ${
-                                    isDarkMode 
-                                      ? 'border-white/5 hover:border-[#00C3FF]/50 bg-white/5 text-white hover:bg-[#00C3FF]/10' 
-                                      : 'border-slate-200 hover:border-cyan-500 bg-slate-50 text-slate-700 hover:bg-cyan-50/50'
-                                  }`}
-                                >
-                                  {time}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      /* Booking Details Form input overlay */
-                      <form onSubmit={handleBookingSubmit} className="space-y-4">
-                        <div className="flex items-center justify-between pb-3 border-b transition-colors border-white/5">
-                          <div>
-                            <span className="text-[10px] uppercase font-bold tracking-wider text-[#00C3FF] block">Step 02 of 02</span>
-                            <h4 className="text-lg font-bold">Guest Booking Details</h4>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => setSelectedTime(null)}
-                            className={`text-xs font-bold underline transition-colors ${isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-slate-500 hover:text-slate-900'}`}
-                          >
-                            Change Date/Time
-                          </button>
-                        </div>
-
-                        <div className="p-3.5 rounded-xl border text-xs font-semibold flex items-center gap-3 transition-colors duration-300 border-dashed border-[#00C3FF]/30 bg-[#00C3FF]/5">
-                          <Calendar className="w-4 h-4 text-[#00C3FF]" />
-                          <div>
-                            <span className="text-[9px] uppercase tracking-wider block text-zinc-400">Appointment Period</span>
-                            <span>{selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })} at {selectedTime}</span>
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div className="space-y-1.5">
-                            <label className="text-[10px] font-extrabold uppercase text-zinc-400">Your Full Name *</label>
-                            <div className="relative">
-                              <User className="absolute left-3 top-3 w-4 h-4 text-zinc-500" />
-                              <input 
-                                type="text"
-                                required
-                                value={bookingForm.name}
-                                onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
-                                placeholder="e.g. Sterling Dynamics"
-                                className={`w-full h-10 pl-10 pr-4 rounded-xl text-xs border focus:outline-none transition-all ${
-                                  isDarkMode 
-                                    ? 'bg-zinc-950/60 border-white/10 text-white focus:border-[#00C3FF]/80 focus:bg-zinc-900' 
-                                    : 'bg-slate-50 border-slate-200 text-slate-900 focus:border-cyan-500 focus:bg-white'
-                                }`}
-                              />
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-1.5">
-                            <label className="text-[10px] font-extrabold uppercase text-zinc-400">Your Email Address *</label>
-                            <div className="relative">
-                              <Mail className="absolute left-3 top-3 w-4 h-4 text-zinc-500" />
-                              <input 
-                                type="email"
-                                required
-                                value={bookingForm.email}
-                                onChange={(e) => setBookingForm({ ...bookingForm, email: e.target.value })}
-                                placeholder="e.g. alex@dynamics.com"
-                                className={`w-full h-10 pl-10 pr-4 rounded-xl text-xs border focus:outline-none transition-all ${
-                                  isDarkMode 
-                                    ? 'bg-zinc-950/60 border-white/10 text-white focus:border-[#00C3FF]/80 focus:bg-zinc-900' 
-                                    : 'bg-slate-50 border-slate-200 text-slate-900 focus:border-cyan-500 focus:bg-white'
-                                }`}
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-extrabold uppercase text-zinc-400">Company Name (Optional)</label>
-                          <div className="relative">
-                            <Building className="absolute left-3 top-3 w-4 h-4 text-zinc-500" />
-                            <input 
-                              type="text"
-                              value={bookingForm.company}
-                              onChange={(e) => setBookingForm({ ...bookingForm, company: e.target.value })}
-                              placeholder="e.g. Sterling Dynamics Inc."
-                              className={`w-full h-10 pl-10 pr-4 rounded-xl text-xs border focus:outline-none transition-all ${
-                                isDarkMode 
-                                  ? 'bg-zinc-950/60 border-white/10 text-white focus:border-[#00C3FF]/80 focus:bg-zinc-900' 
-                                  : 'bg-slate-50 border-slate-200 text-slate-900 focus:border-cyan-500 focus:bg-white'
-                              }`}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-extrabold uppercase text-zinc-400">Brief Project Objectives *</label>
-                          <textarea 
-                            required
-                            rows={3}
-                            value={bookingForm.notes}
-                            onChange={(e) => setBookingForm({ ...bookingForm, notes: e.target.value })}
-                            placeholder="Please outline the architecture, integrations, design system goals or product timelines..."
-                            className={`w-full p-3.5 rounded-xl text-xs border focus:outline-none transition-all resize-none ${
-                              isDarkMode 
-                                ? 'bg-zinc-950/60 border-white/10 text-white focus:border-[#00C3FF]/80 focus:bg-zinc-900' 
-                                : 'bg-slate-50 border-slate-200 text-slate-900 focus:border-cyan-500 focus:bg-white'
-                            }`}
-                          />
-                        </div>
-
-                        <button 
-                          type="submit"
-                          className="w-full h-11 rounded-full font-bold text-xs sm:text-sm tracking-wide mt-4 bg-[#00C3FF] text-black hover:bg-[#FFE600] shadow-[inset_0_-2px_4px_0_rgba(255,255,255,0.4)] transition-all duration-300 flex items-center justify-center gap-2"
-                        >
-                          Confirm System Call Appointment <ArrowRight className="w-4 h-4" />
-                        </button>
-
-                        <div className="flex items-center my-3.5">
-                          <div className="flex-grow border-t border-white/5"></div>
-                          <span className="mx-3.5 text-[10px] text-zinc-500 uppercase tracking-widest font-extrabold">or</span>
-                          <div className="flex-grow border-t border-white/5"></div>
-                        </div>
-
-                        <a
-                          href="https://wa.me/918128181213?text=Hi%2C%20I%20just%20saw%20your%20profile%20on%20dhv7.com%20and"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full h-11 rounded-full font-bold text-xs sm:text-sm tracking-wide bg-[#25D366] text-white flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] animate-whatsapp-breathe cursor-pointer animate-whatsapp-breathe"
-                        >
-                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.454 5.709 1.455h.008c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/>
-                          </svg>
-                          Send a WhatsApp
-                        </a>
-                      </form>
-                    )}
-                  </motion.div>
-                )}
-
-                {bookingStatus === 'submitting' && (
-                  <motion.div
-                    key="submitting"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="flex flex-col items-center justify-center py-20 text-center space-y-4"
-                  >
-                    <div className="w-12 h-12 rounded-full border-2 border-t-transparent border-[#00C3FF] animate-spin" />
-                    <h4 className="text-base font-bold">Locking Appointment slot...</h4>
-                    <p className="text-xs text-zinc-500">Generating direct Google Meet video routing connection details.</p>
-                  </motion.div>
-                )}
-
-                {bookingStatus === 'success' && (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="flex flex-col items-center justify-center text-center space-y-6 py-6"
-                  >
-                    <div className="w-16 h-16 rounded-full bg-emerald-500/10 border-2 border-emerald-500 flex items-center justify-center text-emerald-400">
-                      <Check className="w-8 h-8" />
-                    </div>
-                    
-                    <div>
-                      <h4 className="text-xl sm:text-2xl font-extrabold tracking-tight">Discovery Call Confirmed!</h4>
-                      <p className="text-xs text-zinc-400 mt-2 max-w-sm mx-auto">
-                        Simulated meeting invite dispatched. A Google Meet invitation link has been successfully generated for your technical alignment session.
-                      </p>
-                    </div>
-
-                    <div className={`p-4 rounded-2xl border w-full max-w-md text-left text-xs ${isDarkMode ? 'bg-zinc-950/60 border-white/5' : 'bg-slate-50 border-slate-200'}`}>
-                      <div className="flex justify-between border-b pb-2.5 transition-colors border-white/5">
-                        <span className="text-zinc-500 font-bold uppercase text-[9px] tracking-wider">Session Partner</span>
-                        <span className="font-semibold">{bookingForm.name}</span>
-                      </div>
-                      <div className="flex justify-between border-b py-2.5 transition-colors border-white/5">
-                        <span className="text-zinc-500 font-bold uppercase text-[9px] tracking-wider">Date & Time</span>
-                        <span className="font-semibold">{selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })} at {selectedTime}</span>
-                      </div>
-                      <div className="flex flex-col gap-1.5 py-2.5">
-                        <span className="text-zinc-500 font-bold uppercase text-[9px] tracking-wider block">Google Meet Room Link</span>
-                        <div className="flex items-center justify-between gap-3 bg-[#00C3FF]/5 p-2 border border-[#00C3FF]/20 rounded-xl">
-                          <span className="font-mono text-[#00C3FF] select-all font-bold overflow-hidden text-ellipsis whitespace-nowrap">{meetLink}</span>
-                          <button
-                            onClick={() => navigator.clipboard.writeText(meetLink)}
-                            className="text-[9px] font-bold uppercase px-2.5 py-1 rounded bg-[#00C3FF] text-black hover:bg-[#FFE600] transition-all"
-                          >
-                            Copy Link
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4 w-full max-w-xs">
-                      <a
-                        href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=60m+Technical+Alignment+with+Dhaval&dates=${selectedDate?.toISOString().replace(/[-:]/g, "").split(".")[0]}Z/${selectedDate?.toISOString().replace(/[-:]/g, "").split(".")[0]}Z&details=Google+Meet+Discovery+Call+with+Dhaval+Vadgama`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 h-10 rounded-full font-bold text-xs flex items-center justify-center bg-white/5 border border-white/10 hover:bg-white/10 text-white transition-all duration-300"
-                      >
-                        Add to Calendar
-                      </a>
-                      <button
-                        onClick={handleResetBooking}
-                        className="flex-1 h-10 rounded-full font-bold text-xs bg-[#00C3FF] text-black hover:bg-[#FFE600] transition-all duration-300"
-                      >
-                        Book Another
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-
-              </AnimatePresence>
+            <div className="relative z-10 w-full md:w-auto flex justify-center">
+              <button
+                onClick={() => setIsSchedulerOpen(true)}
+                className="w-full sm:w-auto px-8 h-14 rounded-full font-bold text-sm tracking-wider bg-[#00C3FF] text-black hover:bg-[#FFE600] shadow-[0_4px_20px_rgba(0,195,255,0.3)] transition-all duration-300 flex items-center justify-center gap-3 hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
+              >
+                <Calendar className="w-4 h-4" /> Book Appointment Slot
+              </button>
             </div>
 
           </div>
@@ -1420,6 +971,9 @@ export default function Concept1() {
 
       {/* 🤝 Premium Inquiry Modal */}
       <InquiryModal isOpen={isInquiryOpen} onClose={() => setIsInquiryOpen(false)} />
+
+      {/* 📅 Premium Timezone-Aware Scheduler Modal */}
+      <SchedulerModal isOpen={isSchedulerOpen} onClose={() => setIsSchedulerOpen(false)} isDarkMode={isDarkMode} />
     </div>
   );
 }
