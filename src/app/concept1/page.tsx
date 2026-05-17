@@ -429,10 +429,10 @@ export default function Concept1() {
             {/* Left side text selection items */}
             <div className="lg:col-span-5 space-y-4">
               {[
-                { title: "AI Pipeline Automation", desc: "Building autonomous systems running edge microservices to drive daily processes.", icon: <Cpu className="w-5 h-5 text-cyan-400" /> },
-                { title: "Scalable Enterprise Architectures", desc: "Designing bulletproof API layers, secure database backends, and highly active CRMs.", icon: <Layers className="w-5 h-5 text-indigo-400" /> },
-                { title: "High-End Visual Identity", desc: "Co-founding top creative design startups to elevate interface standards to direct premium status.", icon: <Star className="w-5 h-5 text-purple-400" /> },
-                { title: "IoT Alert Networks", desc: "Deploying secure, real-time alert modules keeping physical data tracking connected.", icon: <Terminal className="w-5 h-5 text-emerald-400" /> }
+                { title: "AI Pipeline Automation", desc: "Building autonomous systems running edge microservices to drive daily processes.", icon: (dark: boolean) => <Cpu className={`w-5 h-5 ${dark ? 'text-cyan-400' : 'text-cyan-600'}`} /> },
+                { title: "Scalable Enterprise Architectures", desc: "Designing bulletproof API layers, secure database backends, and highly active CRMs.", icon: (dark: boolean) => <Layers className={`w-5 h-5 ${dark ? 'text-indigo-400' : 'text-indigo-600'}`} /> },
+                { title: "High-End Visual Identity", desc: "Co-founding top creative design startups to elevate interface standards to direct premium status.", icon: (dark: boolean) => <Star className={`w-5 h-5 ${dark ? 'text-purple-400' : 'text-purple-600'}`} /> },
+                { title: "IoT Alert Networks", desc: "Deploying secure, real-time alert modules keeping physical data tracking connected.", icon: (dark: boolean) => <Terminal className={`w-5 h-5 ${dark ? 'text-emerald-400' : 'text-emerald-600'}`} /> }
               ].map((item, idx) => (
                 <button
                   key={idx}
@@ -441,8 +441,8 @@ export default function Concept1() {
                     ? (isDarkMode ? 'border-white/10 bg-white/5 shadow-lg' : 'border-slate-300 bg-white shadow-md') 
                     : (isDarkMode ? 'border-transparent hover:bg-white/[0.02]' : 'border-transparent hover:bg-slate-200/50')}`}
                 >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-colors ${activeStep === idx ? 'border-cyan-500/30 bg-cyan-500/10' : 'border-white/5 bg-white/5'}`}>
-                    {item.icon}
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-colors ${activeStep === idx ? 'border-cyan-500/30 bg-cyan-500/10' : (isDarkMode ? 'border-white/5 bg-white/5' : 'border-slate-200 bg-slate-100')}`}>
+                    {item.icon(isDarkMode)}
                   </div>
                   <div>
                     <h3 className={`text-base sm:text-lg font-bold transition-colors ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{item.title}</h3>
@@ -464,20 +464,20 @@ export default function Concept1() {
                       key="step0" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }}
                       className="w-full h-full flex flex-col justify-between"
                     >
-                      <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                        <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
-                          <Terminal className="w-4 h-4 text-cyan-400" />
+                      <div className={`flex items-center justify-between border-b pb-3 ${isDarkMode ? 'border-white/5' : 'border-slate-100'}`}>
+                        <div className={`flex items-center gap-2 text-xs font-semibold ${isDarkMode ? 'text-zinc-500' : 'text-slate-600'}`}>
+                          <Terminal className={`w-4 h-4 ${isDarkMode ? 'text-cyan-400' : 'text-cyan-600'}`} />
                           <span>AI PIPELINE CONSOLE</span>
                         </div>
                         <span className="px-2 py-0.5 rounded-full text-[9px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">ACTIVE</span>
                       </div>
                       <div className="flex-grow flex items-center justify-center p-6">
-                        <div className="w-full bg-black/60 rounded-xl p-4 border border-white/5 font-mono text-[10px] sm:text-xs text-cyan-400 space-y-1.5 overflow-hidden shadow-inner">
-                          <p className="text-zinc-600">// Initializing autonomous agent stack</p>
+                        <div className={`w-full rounded-xl p-4 font-mono text-[10px] sm:text-xs space-y-1.5 overflow-hidden shadow-inner transition-colors ${isDarkMode ? 'bg-black/60 border border-white/5 text-cyan-400' : 'bg-slate-900 border border-slate-800 text-cyan-400'}`}>
+                          <p className="text-zinc-500">// Initializing autonomous agent stack</p>
                           <p className="text-zinc-300">$ npx build-ai-agent-engine --domain dhv7.com</p>
                           <p className="text-emerald-400">✓ System variables loaded from secure Deno storage</p>
                           <p className="text-purple-400">🤖 Connecting vector storage models (Dolly/Deno)...</p>
-                          <p className="text-white">🚀 Agent operational. Uptime: 100%. Processing inputs...</p>
+                          <p className={`transition-colors ${isDarkMode ? 'text-white' : 'text-zinc-200'}`}>🚀 Agent operational. Uptime: 100%. Processing inputs...</p>
                         </div>
                       </div>
                     </motion.div>
@@ -488,23 +488,23 @@ export default function Concept1() {
                       key="step1" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }}
                       className="w-full h-full flex flex-col justify-between"
                     >
-                      <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                        <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
-                          <Layers className="w-4 h-4 text-indigo-400" />
+                      <div className={`flex items-center justify-between border-b pb-3 ${isDarkMode ? 'border-white/5' : 'border-slate-100'}`}>
+                        <div className={`flex items-center gap-2 text-xs font-semibold ${isDarkMode ? 'text-zinc-500' : 'text-slate-600'}`}>
+                          <Layers className={`w-4 h-4 ${isDarkMode ? 'text-indigo-400' : 'text-indigo-600'}`} />
                           <span>SYSTEM PERFORMANCE</span>
                         </div>
-                        <span className="text-[10px] text-zinc-500 font-bold">API STATUS: 100% OK</span>
+                        <span className={`text-[10px] font-bold ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>API STATUS: 100% OK</span>
                       </div>
                       <div className="flex-grow grid grid-cols-2 gap-4 p-6 items-center">
-                        <div className="bg-[#090e1a]/80 p-4 border border-white/5 rounded-2xl text-center shadow-lg">
-                          <span className="text-[10px] text-zinc-500 uppercase font-semibold">Load Speed optimization</span>
-                          <h4 className="text-2xl font-bold mt-1 text-[#1eb8ce]">-320ms</h4>
-                          <span className="text-[9px] text-emerald-400 block mt-1">✓ Turbopack Active</span>
+                        <div className={`p-4 border rounded-2xl text-center shadow-lg transition-colors ${isDarkMode ? 'bg-[#090e1a]/80 border-white/5' : 'bg-slate-50 border-slate-150'}`}>
+                          <span className={`text-[10px] uppercase font-semibold ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>Load Speed optimization</span>
+                          <h4 className={`text-2xl font-bold mt-1 ${isDarkMode ? 'text-[#1eb8ce]' : 'text-cyan-600'}`}>-320ms</h4>
+                          <span className={`text-[9px] block mt-1 ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>✓ Turbopack Active</span>
                         </div>
-                        <div className="bg-[#090e1a]/80 p-4 border border-white/5 rounded-2xl text-center shadow-lg">
-                          <span className="text-[10px] text-zinc-500 uppercase font-semibold">Microservices Security</span>
-                          <h4 className="text-2xl font-bold mt-1 text-purple-400">JWT / SSL</h4>
-                          <span className="text-[9px] text-zinc-500 block mt-1">✓ Isolated Sandbox</span>
+                        <div className={`p-4 border rounded-2xl text-center shadow-lg transition-colors ${isDarkMode ? 'bg-[#090e1a]/80 border-white/5' : 'bg-slate-50 border-slate-150'}`}>
+                          <span className={`text-[10px] uppercase font-semibold ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>Microservices Security</span>
+                          <h4 className={`text-2xl font-bold mt-1 ${isDarkMode ? 'text-purple-400' : 'text-purple-600'}`}>JWT / SSL</h4>
+                          <span className={`text-[9px] block mt-1 ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>✓ Isolated Sandbox</span>
                         </div>
                       </div>
                     </motion.div>
@@ -515,23 +515,23 @@ export default function Concept1() {
                       key="step2" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }}
                       className="w-full h-full flex flex-col justify-between"
                     >
-                      <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                        <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
-                          <Star className="w-4 h-4 text-purple-400" />
+                      <div className={`flex items-center justify-between border-b pb-3 ${isDarkMode ? 'border-white/5' : 'border-slate-100'}`}>
+                        <div className={`flex items-center gap-2 text-xs font-semibold ${isDarkMode ? 'text-zinc-500' : 'text-slate-600'}`}>
+                          <Star className={`w-4 h-4 ${isDarkMode ? 'text-purple-400' : 'text-purple-600'}`} />
                           <span>AGENCY IDENTITY DESIGN SYSTEM</span>
                         </div>
                       </div>
                       <div className="flex-grow flex items-center justify-center p-6 gap-6">
                         <div className="flex flex-col items-center">
                           <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-cyan-400 to-indigo-600 shadow-xl flex items-center justify-center text-xl">🎨</div>
-                          <span className="text-xs font-bold mt-2">Harmonious Color Preset</span>
+                          <span className={`text-xs font-bold mt-2 ${isDarkMode ? 'text-zinc-300' : 'text-slate-800'}`}>Harmonious Color Preset</span>
                         </div>
                         <div className="flex flex-col items-center">
-                          <div className="w-16 h-16 rounded-3xl bg-zinc-900 border border-white/10 shadow-xl flex flex-col justify-center items-center gap-1">
-                            <span className="text-xs font-bold text-white">Inter</span>
-                            <span className="text-[8px] text-zinc-500">Outfit</span>
+                          <div className={`w-16 h-16 rounded-3xl shadow-xl flex flex-col justify-center items-center gap-1 border transition-colors ${isDarkMode ? 'bg-zinc-900 border-white/10' : 'bg-slate-100 border-slate-200'}`}>
+                            <span className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>Inter</span>
+                            <span className={`text-[8px] ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>Outfit</span>
                           </div>
-                          <span className="text-xs font-bold mt-2">Premium Type Typography</span>
+                          <span className={`text-xs font-bold mt-2 ${isDarkMode ? 'text-zinc-300' : 'text-slate-800'}`}>Premium Type Typography</span>
                         </div>
                       </div>
                     </motion.div>
@@ -542,22 +542,22 @@ export default function Concept1() {
                       key="step3" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }}
                       className="w-full h-full flex flex-col justify-between"
                     >
-                      <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                        <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
-                          <Terminal className="w-4 h-4 text-emerald-400" />
+                      <div className={`flex items-center justify-between border-b pb-3 ${isDarkMode ? 'border-white/5' : 'border-slate-100'}`}>
+                        <div className={`flex items-center gap-2 text-xs font-semibold ${isDarkMode ? 'text-zinc-500' : 'text-slate-600'}`}>
+                          <Terminal className={`w-4 h-4 ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`} />
                           <span>IOT ALERTS DASHBOARD</span>
                         </div>
                       </div>
                       <div className="flex-grow flex items-center justify-center p-6">
-                        <div className="w-full bg-[#090e1a]/95 rounded-2xl border border-white/5 p-4 flex items-center justify-between shadow-lg">
+                        <div className={`w-full rounded-2xl border p-4 flex items-center justify-between shadow-lg transition-colors ${isDarkMode ? 'bg-[#090e1a]/95 border-white/5' : 'bg-slate-50 border-slate-150'}`}>
                           <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-base">🚨</div>
                             <div className="flex flex-col">
-                              <span className="text-xs font-bold">WatchOver Incident Alert</span>
-                              <span className="text-[10px] text-zinc-500">Node ID: 5218-Secured</span>
+                              <span className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>WatchOver Incident Alert</span>
+                              <span className={`text-[10px] ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>Node ID: 5218-Secured</span>
                             </div>
                           </div>
-                          <span className="text-xs font-bold text-emerald-400">RESOLVED</span>
+                          <span className={`text-xs font-bold ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>RESOLVED</span>
                         </div>
                       </div>
                     </motion.div>
@@ -599,14 +599,14 @@ export default function Concept1() {
                 Advanced static prerendering models and backend caches driving extreme performance ratios.
               </p>
               
-              <div className="mt-8 bg-black/35 rounded-2xl p-4 border border-white/5 flex items-center justify-between">
+              <div className={`mt-8 rounded-2xl p-4 border flex items-center justify-between transition-colors ${isDarkMode ? 'bg-black/35 border-white/5' : 'bg-slate-50 border-slate-150'}`}>
                 <div>
-                  <span className="text-[9px] text-zinc-500 block">SYSTEM LOAD SCALE</span>
-                  <span className="text-xl font-bold text-white block mt-0.5">+450%</span>
+                  <span className={`text-[9px] block ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>SYSTEM LOAD SCALE</span>
+                  <span className={`text-xl font-bold block mt-0.5 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{`+450%`}</span>
                 </div>
                 <div>
-                  <span className="text-[9px] text-zinc-500 block">DB QUERY DELAY</span>
-                  <span className="text-xl font-bold text-emerald-400 block mt-0.5">0.02ms</span>
+                  <span className={`text-[9px] block ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>DB QUERY DELAY</span>
+                  <span className={`text-xl font-bold block mt-0.5 ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>{`0.02ms`}</span>
                 </div>
               </div>
             </div>
@@ -621,16 +621,16 @@ export default function Concept1() {
                 <div className="w-8 h-8 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">🤖</div>
               </div>
               
-              <div className="h-28 overflow-hidden relative border border-white/5 rounded-2xl bg-black/45 p-3 shadow-inner">
-                <div className="absolute inset-x-0 top-0 h-6 bg-gradient-to-b from-black to-transparent pointer-events-none z-10" />
-                <div className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-black to-transparent pointer-events-none z-10" />
+              <div className={`h-28 overflow-hidden relative border rounded-2xl p-3 shadow-inner transition-colors ${isDarkMode ? 'border-white/5 bg-black/45' : 'border-slate-200 bg-slate-900'}`}>
+                <div className={`absolute inset-x-0 top-0 h-6 bg-gradient-to-b to-transparent pointer-events-none z-10 ${isDarkMode ? 'from-black' : 'from-slate-900'}`} />
+                <div className={`absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t to-transparent pointer-events-none z-10 ${isDarkMode ? 'from-black' : 'from-slate-900'}`} />
                 
                 {/* Scrolling task marquee */}
                 <div className="space-y-2 animate-[pulse_3s_infinite] font-mono text-[9px] text-zinc-400">
                   <p className="text-[#1eb8ce]">✓ Deploying secured Deno edge handlers...</p>
                   <p className="text-purple-400">✓ Integrating secure Resend communication flows...</p>
                   <p className="text-emerald-400">✓ Systems calculations updated live...</p>
-                  <p className="text-white">✓ High-fidelity UI audit validated successfully...</p>
+                  <p className={`transition-colors ${isDarkMode ? 'text-white' : 'text-zinc-200'}`}>✓ High-fidelity UI audit validated successfully...</p>
                 </div>
               </div>
             </div>
@@ -647,9 +647,9 @@ export default function Concept1() {
                 Recreating the high-end glassmorphic navbar with customizable backdrop saturation levels.
               </p>
               
-              <div className="mt-8 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-md p-3 flex items-center justify-between text-xs font-semibold">
-                <span className="text-zinc-300">Glass Saturate Factor</span>
-                <span className="text-[#1eb8ce] font-extrabold">180% Blur</span>
+              <div className={`mt-8 border rounded-2xl p-3 flex items-center justify-between text-xs font-semibold transition-colors ${isDarkMode ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-slate-100'}`}>
+                <span className={isDarkMode ? 'text-zinc-300' : 'text-slate-600'}>Glass Saturate Factor</span>
+                <span className={`font-extrabold ${isDarkMode ? 'text-[#1eb8ce]' : 'text-cyan-600'}`}>180% Blur</span>
               </div>
             </div>
 
@@ -663,14 +663,14 @@ export default function Concept1() {
               </div>
 
               {/* CRM Mock Completed Transfer Card Widget */}
-              <div className="bg-black/35 border border-white/5 rounded-2xl p-4 flex flex-col gap-2 mt-4 text-[10px] sm:text-xs">
-                <div className="flex justify-between items-center text-zinc-500">
+              <div className={`border rounded-2xl p-4 flex flex-col gap-2 mt-4 text-[10px] sm:text-xs transition-colors ${isDarkMode ? 'bg-black/35 border-white/5' : 'bg-slate-50 border-slate-150'}`}>
+                <div className={`flex justify-between items-center ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>
                   <span>From: Systems Consultation</span>
                   <span>To: CRM Database Flow</span>
                 </div>
-                <div className="flex justify-between items-center mt-2 border-t border-white/5 pt-2 font-bold">
-                  <span className="text-white">$15,000 USD</span>
-                  <span className="text-emerald-400">✓ Transfer Completed</span>
+                <div className={`flex justify-between items-center mt-2 border-t pt-2 font-bold ${isDarkMode ? 'border-white/5 text-white' : 'border-slate-150 text-slate-800'}`}>
+                  <span>$15,000 USD</span>
+                  <span className={isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}>✓ Transfer Completed</span>
                 </div>
               </div>
             </div>
@@ -696,8 +696,8 @@ export default function Concept1() {
           <div className="flex flex-col gap-6 w-full relative">
             
             {/* Fade Out Overlays Left & Right */}
-            <div className="absolute inset-y-0 left-0 w-20 md:w-48 bg-gradient-to-r from-[#020817] to-transparent pointer-events-none z-10 transition-colors" />
-            <div className="absolute inset-y-0 right-0 w-20 md:w-48 bg-gradient-to-l from-[#020817] to-transparent pointer-events-none z-10 transition-colors" />
+            <div className={`absolute inset-y-0 left-0 w-20 md:w-48 bg-gradient-to-r pointer-events-none z-10 transition-all duration-500 ${isDarkMode ? 'from-[#020817] to-transparent' : 'from-slate-50/90 to-transparent'}`} />
+            <div className={`absolute inset-y-0 right-0 w-20 md:w-48 bg-gradient-to-l pointer-events-none z-10 transition-all duration-500 ${isDarkMode ? 'from-[#020817] to-transparent' : 'from-slate-50/90 to-transparent'}`} />
 
             {/* Row 1 - Sliding Left */}
             <div className="overflow-hidden w-full flex items-center">
@@ -788,18 +788,18 @@ export default function Concept1() {
             </p>
 
             {/* Retainer Cycle toggle */}
-            <div className="flex items-center gap-3 border border-white/10 rounded-full p-1 bg-white/5 backdrop-blur-md mt-8 shadow-sm">
+            <div className={`flex items-center gap-3 border rounded-full p-1 backdrop-blur-md mt-8 shadow-sm transition-colors duration-500 ${isDarkMode ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-slate-100'}`}>
               <button 
                 onClick={() => setBillingCycle('monthly')}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${billingCycle === 'monthly' ? 'bg-[#1eb8ce] text-black shadow-sm' : 'text-zinc-400 hover:text-white'}`}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${billingCycle === 'monthly' ? 'bg-[#1eb8ce] text-black shadow-sm' : (isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-slate-500 hover:text-slate-900')}`}
               >
                 Monthly Plan
               </button>
               <button 
                 onClick={() => setBillingCycle('yearly')}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${billingCycle === 'yearly' ? 'bg-[#1eb8ce] text-black shadow-sm' : 'text-zinc-400 hover:text-white'}`}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${billingCycle === 'yearly' ? 'bg-[#1eb8ce] text-black shadow-sm' : (isDarkMode ? 'text-zinc-400 hover:text-white' : 'text-slate-500 hover:text-slate-900')}`}
               >
-                Annual Retention <span className="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded-full ml-1 font-bold">SAVE 20%</span>
+                Annual Retention <span className={`text-[9px] px-1.5 py-0.5 rounded-full ml-1 font-bold ${isDarkMode ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-600'}`}>SAVE 20%</span>
               </button>
             </div>
           </div>
@@ -946,14 +946,14 @@ export default function Concept1() {
               {faqData.map((faq, index) => (
                 <div 
                   key={index}
-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${isDarkMode ? 'border-white/5 bg-[#090e1a]/60 shadow-[0_4px_24px_0_rgba(0,0,0,0.15)]' : 'border-slate-200 bg-white shadow-sm'}`}
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${isDarkMode ? 'border-white/5 bg-[#090e1a]/60 shadow-[0_4px_24px_0_rgba(0,0,0,0.15)]' : 'border-slate-200 bg-white shadow-sm hover:border-slate-350'}`}
                 >
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-bold text-sm sm:text-base cursor-pointer"
+                    className={`w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-bold text-sm sm:text-base cursor-pointer transition-colors ${isDarkMode ? 'hover:bg-white/[0.01]' : 'hover:bg-slate-50/50'}`}
                   >
                     <span className={isDarkMode ? 'text-white' : 'text-slate-800'}>{faq.question}</span>
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 border transition-all duration-300 ${openFaq === index ? 'border-cyan-500/40 bg-cyan-500/10 text-[#1eb8ce] rotate-90' : 'border-white/5 bg-white/5 text-zinc-500'}`}>
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 border transition-all duration-300 ${openFaq === index ? 'border-cyan-500/40 bg-cyan-500/10 text-[#1eb8ce] rotate-90' : (isDarkMode ? 'border-white/5 bg-white/5 text-zinc-500' : 'border-slate-200 bg-slate-100 text-slate-500')}`}>
                       <ChevronRight className="w-4 h-4" />
                     </div>
                   </button>
@@ -1035,8 +1035,8 @@ export default function Concept1() {
           <div className="flex flex-col md:flex-row gap-6 items-center">
             <p className="text-[11px] text-zinc-500">© {new Date().getFullYear()} Dhaval Vadgama. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="https://linkedin.com/in/dhavalvadgama" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
-              <a href="https://github.com/dhavalvadgama" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
+              <a href="https://linkedin.com/in/dhavalvadgama" target="_blank" rel="noopener noreferrer" className={`transition-colors ${isDarkMode ? 'hover:text-white text-zinc-500' : 'hover:text-slate-900 text-slate-500'}`}>LinkedIn</a>
+              <a href="https://github.com/dhavalvadgama" target="_blank" rel="noopener noreferrer" className={`transition-colors ${isDarkMode ? 'hover:text-white text-zinc-500' : 'hover:text-slate-900 text-slate-500'}`}>GitHub</a>
             </div>
           </div>
         </div>
