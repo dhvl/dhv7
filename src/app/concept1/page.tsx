@@ -701,8 +701,8 @@ export default function Concept1() {
 
             {/* Row 1 - Sliding Left */}
             <div className="overflow-hidden w-full flex items-center">
-              <div className="animate-marquee-left flex gap-6">
-                {[...testimonialsRow1, ...testimonialsRow1].map((card, idx) => (
+              <div className="marquee-slide-left flex gap-6">
+                {[...testimonialsRow1, ...testimonialsRow1, ...testimonialsRow1, ...testimonialsRow1, ...testimonialsRow1, ...testimonialsRow1, ...testimonialsRow1, ...testimonialsRow1].map((card, idx) => (
                   <div 
                     key={idx}
                     className={`w-[290px] sm:w-[350px] p-6 rounded-2xl border backdrop-blur-md flex flex-col justify-between shrink-0 shadow-md ${isDarkMode ? 'border-white/5 bg-[#090e1a]/60 text-white' : 'border-slate-200 bg-white text-slate-800'}`}
@@ -737,8 +737,8 @@ export default function Concept1() {
 
             {/* Row 2 - Sliding Right */}
             <div className="overflow-hidden w-full flex items-center">
-              <div className="animate-marquee-right flex gap-6">
-                {[...testimonialsRow2, ...testimonialsRow2].map((card, idx) => (
+              <div className="marquee-slide-right flex gap-6">
+                {[...testimonialsRow2, ...testimonialsRow2, ...testimonialsRow2, ...testimonialsRow2, ...testimonialsRow2, ...testimonialsRow2, ...testimonialsRow2, ...testimonialsRow2].map((card, idx) => (
                   <div 
                     key={idx}
                     className={`w-[290px] sm:w-[350px] p-6 rounded-2xl border backdrop-blur-md flex flex-col justify-between shrink-0 shadow-md ${isDarkMode ? 'border-white/5 bg-[#090e1a]/60 text-white' : 'border-slate-200 bg-white text-slate-800'}`}
