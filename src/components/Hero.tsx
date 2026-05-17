@@ -68,7 +68,7 @@ export default function Hero() {
         transition={{ duration: 0.8, delay: 0.5 }}
         className="text-base md:text-lg lg:text-xl text-zinc-400 max-w-3xl mb-12 leading-relaxed"
       >
-        I'm <strong className="text-white font-medium">Dhaval Vadgama</strong>. Over <strong className="text-white font-medium">11+ years</strong> of driving product lifecycle execution, leading high-growth scaling strategies, building top-10 award-winning UI/UX agencies, and engineering modern AI-powered systems.
+        I'm <strong className="text-white font-medium">Dhaval Vadgama</strong>. Over <strong className="text-white font-medium">{new Date().getFullYear() - 2011}+ years</strong> of driving product lifecycle execution, leading high-growth scaling strategies, building top-10 award-winning UI/UX agencies, and engineering modern AI-powered systems.
       </motion.p>
 
       {/* CTA Buttons */}

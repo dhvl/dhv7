@@ -6,7 +6,7 @@ const skills = [
   {
     icon: <Briefcase className="w-6 h-6 text-blue-400" />,
     title: "Product & Project Strategy",
-    subtitle: "11+ Years of Leadership",
+    subtitle: `${new Date().getFullYear() - 2011}+ Years of Leadership`,
     description: "End-to-end product execution, roadmap scoping, and scaling operations. Veteran in managing multi-disciplinary teams, aligning cross-functional workflows, and bridging engineering with market growth.",
     bgClass: "from-blue-500/10 to-transparent",
     borderClass: "border-blue-500/20"
