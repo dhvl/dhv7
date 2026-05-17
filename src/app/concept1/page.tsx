@@ -35,14 +35,13 @@ export default function Concept1() {
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 overflow-hidden flex items-center justify-center transition-transform hover:scale-105 duration-300">
               <Image 
-                src="/assets/dhv7-logo-icon.png" 
+                src={isDarkMode ? "/assets/dhv7-logo-icon.png" : "/assets/dhv7-logo-icon-dark.png"} 
                 alt="DHV7 Brand Icon" 
                 width={40} 
                 height={40} 
                 className="object-contain"
               />
             </div>
-            <span className={`text-lg font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>dhv7</span>
           </div>
 
           {/* Navigation Links */}
