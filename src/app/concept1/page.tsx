@@ -189,7 +189,7 @@ export default function Concept1() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span>{totalExperience}+ YEARS OF SYSTEMS EXECUTION SECURED</span>
+            <span>{totalExperience}+ YEARS OF RELENTLESS OPERATIONAL SYNERGY</span>
           </motion.div>
 
           <motion.h1 
@@ -198,8 +198,8 @@ export default function Concept1() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className={`text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mt-6 max-w-5xl leading-[1.1] transition-colors duration-500 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}
           >
-            Architecting <span className={`bg-clip-text text-transparent bg-gradient-to-r ${isDarkMode ? 'from-cyan-400 via-indigo-400 to-purple-400' : 'from-cyan-600 via-indigo-600 to-purple-600'}`}>Scalable Systems.</span> <br />
-            Guiding Products & UI/UX.
+            Translating Chaotic Friction <br />
+            <span className={`bg-clip-text text-transparent bg-gradient-to-r ${isDarkMode ? 'from-cyan-400 via-indigo-400 to-purple-400' : 'from-cyan-600 via-indigo-600 to-purple-600'}`}>Into Seamless Systems.</span>
           </motion.h1>
 
           <motion.p 
@@ -208,7 +208,7 @@ export default function Concept1() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className={`max-w-3xl text-base sm:text-lg lg:text-xl mt-6 leading-relaxed transition-colors duration-500 ${isDarkMode ? 'text-zinc-400' : 'text-slate-500'}`}
           >
-            Co-founded top-10 award-winning UI/UX agencies, automated next-gen technical infrastructures with Deno/Dolly architectures, and spearheaded cross-functional systems that bridge high-growth product operations.
+            An obsessive digital explorer bridging the gap between premium design logic and bulletproof code execution. I don’t wait for blueprints—I design the frameworks, assemble the pipelines, and build products that demand to be noticed.
           </motion.p>
 
           <motion.div 
