@@ -82,7 +82,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="relative w-full max-w-lg overflow-hidden rounded-[32px] border border-white/10 bg-zinc-950 p-8 md:p-10 shadow-2xl z-10 glass-panel"
+            className="relative w-full max-w-lg max-h-[calc(100vh-2rem)] overflow-y-auto rounded-[24px] md:rounded-[32px] border border-white/10 bg-zinc-950 p-6 md:p-10 shadow-2xl z-10 glass-panel scrollbar-thin"
           >
             {/* Corner ambient glow */}
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-[40px] pointer-events-none -z-10" />
@@ -90,7 +90,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+              className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer z-20"
             >
               <X className="w-5 h-5" />
             </button>

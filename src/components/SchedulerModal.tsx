@@ -174,7 +174,7 @@ export default function SchedulerModal({ isOpen, onClose, isDarkMode = true }: S
       {isOpen && (
         <div 
           onClick={handleBackdropClick}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto"
         >
           <motion.div
             ref={modalRef}
@@ -182,7 +182,7 @@ export default function SchedulerModal({ isOpen, onClose, isDarkMode = true }: S
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className={`relative w-full max-w-5xl rounded-3xl border backdrop-blur-xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 ${
+            className={`relative w-full max-w-5xl rounded-3xl border backdrop-blur-xl shadow-2xl grid grid-cols-1 lg:grid-cols-12 h-auto max-h-[calc(100vh-2rem)] overflow-y-auto lg:overflow-hidden ${
               isDarkMode 
                 ? 'border-white/10 bg-[#090e1a]/95 text-white shadow-cyan-950/20' 
                 : 'border-slate-200 bg-white text-slate-800 shadow-slate-200/50'
@@ -201,7 +201,7 @@ export default function SchedulerModal({ isOpen, onClose, isDarkMode = true }: S
             </button>
 
             {/* Left Panel: Direct Session Context Details */}
-            <div className={`p-8 lg:p-10 lg:col-span-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r transition-colors relative ${
+            <div className={`p-6 sm:p-8 lg:p-10 lg:col-span-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r transition-colors relative ${
               isDarkMode 
                 ? 'border-white/5 text-white bg-zinc-950/40' 
                 : 'border-slate-100 text-slate-800 bg-slate-50/50'
@@ -251,7 +251,7 @@ export default function SchedulerModal({ isOpen, onClose, isDarkMode = true }: S
                   <span className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-400 block">
                     Services Required (Select Multiple)
                   </span>
-                  <div className="space-y-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
                     {services.map((service) => {
                       const isChecked = selectedServices.includes(service);
                       return (
@@ -286,7 +286,7 @@ export default function SchedulerModal({ isOpen, onClose, isDarkMode = true }: S
               </div>
 
               {/* Confidence Building Stats / Ratings */}
-              <div className="pt-6 mt-6 border-t border-white/5 w-full space-y-4">
+              <div className="pt-6 mt-6 border-t border-white/5 w-full space-y-4 hidden lg:block">
                 <div className={`p-4 rounded-2xl border transition-colors ${
                   isDarkMode 
                     ? 'bg-white/[0.02] border-white/5 text-zinc-300' 
@@ -328,7 +328,7 @@ export default function SchedulerModal({ isOpen, onClose, isDarkMode = true }: S
             </div>
 
             {/* Right Panel: Calendar Grid & Form Step Controllers */}
-            <div className="p-8 lg:p-10 lg:col-span-7 flex flex-col justify-center max-h-[90vh] overflow-y-auto">
+            <div className="p-6 sm:p-8 lg:p-10 lg:col-span-7 flex flex-col justify-center lg:max-h-[80vh] lg:overflow-y-auto">
               <AnimatePresence mode="wait">
                 
                 {bookingStatus === 'idle' && (

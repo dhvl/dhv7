@@ -17,12 +17,12 @@ export default function Navbar({ onOpenInquiry }: NavbarProps) {
     >
       <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-16 h-16 overflow-hidden flex items-center justify-center transition-transform group-hover:scale-105 duration-300">
+          <div className="relative w-[84px] h-[84px] overflow-hidden flex items-center justify-center transition-transform group-hover:scale-105 duration-300">
             <Image 
               src="/assets/dhv7-logo-icon.png" 
               alt="DHV7 Logo" 
-              width={64} 
-              height={64} 
+              width={84} 
+              height={84} 
               className="object-contain"
               priority
             />

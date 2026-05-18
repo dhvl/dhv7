@@ -286,13 +286,14 @@ export default function Concept1() {
           
           {/* Brand Logo Group */}
           <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10 overflow-hidden flex items-center justify-center transition-transform hover:scale-105 duration-300">
+            <div className="relative w-[60px] h-[60px] overflow-hidden flex items-center justify-center transition-transform hover:scale-105 duration-300">
               <Image 
                 src={isDarkMode ? "/assets/dhv7-logo-icon.png" : "/assets/dhv7-logo-icon-dark.png"} 
                 alt="DHV7 Brand Icon" 
-                width={40} 
-                height={40} 
+                width={60} 
+                height={60} 
                 className="object-contain"
+                priority
               />
             </div>
           </div>
@@ -991,7 +992,7 @@ export default function Concept1() {
                   <span className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-400 block">
                     Services Required (Select Multiple)
                   </span>
-                  <div className="space-y-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
                     {services.map((service) => {
                       const isChecked = selectedServices.includes(service);
                       return (
@@ -1018,7 +1019,7 @@ export default function Concept1() {
               </div>
 
               {/* Confidence Building Stats / Ratings */}
-              <div className="pt-6 mt-6 border-t border-white/5 w-full space-y-4">
+              <div className="pt-6 mt-6 border-t border-white/5 w-full space-y-4 hidden lg:block">
                 <div className={`p-4 rounded-2xl border transition-colors ${
                   isDarkMode 
                     ? 'bg-white/[0.02] border-white/5 text-zinc-300' 
