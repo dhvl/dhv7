@@ -541,12 +541,20 @@ export default function SchedulerModal({ isOpen, onClose, isDarkMode = true }: S
                           />
                         </div>
 
-                        <button 
-                          type="submit"
-                          className="w-full h-11 rounded-full font-bold text-xs sm:text-sm tracking-wide mt-4 bg-[#00C3FF] text-black hover:bg-[#FFE600] shadow-[inset_0_-2px_4px_0_rgba(255,255,255,0.4)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
-                        >
-                          Confirm System Call Appointment <ArrowRight className="w-4 h-4" />
-                        </button>
+                        {/* Sticky Bottom Action Bar with Gradient Overlay */}
+                        <div className={`sticky bottom-0 left-0 right-0 pt-6 pb-2 z-30 -mx-6 px-6 sm:-mx-8 sm:px-8 lg:-mx-10 lg:px-10 mt-6 bg-gradient-to-t ${
+                          isDarkMode 
+                            ? 'from-[#090e1a] via-[#090e1a]/95 to-transparent' 
+                            : 'from-white via-white/95 to-transparent'
+                        }`}>
+                          <button 
+                            type="submit"
+                            disabled={!bookingForm.name || !bookingForm.email || !bookingForm.notes}
+                            className="w-full h-11 rounded-full font-bold text-xs sm:text-sm tracking-wide bg-[#00C3FF] text-black hover:bg-[#FFE600] disabled:opacity-30 disabled:cursor-not-allowed shadow-[inset_0_-2px_4px_0_rgba(255,255,255,0.4)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                          >
+                            Confirm System Call Appointment <ArrowRight className="w-4 h-4" />
+                          </button>
+                        </div>
                       </form>
                     )}
                   </motion.div>

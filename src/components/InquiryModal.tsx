@@ -195,20 +195,23 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                     <p className="text-rose-400 text-xs font-semibold">{errorMessage}</p>
                   )}
 
-                  <button
-                    type="submit"
-                    disabled={status === 'submitting'}
-                    className="w-full py-4 bg-white hover:bg-zinc-200 text-black font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50 text-sm font-heading tracking-wide shadow-[inset_0_-2px_4px_0_rgba(255,255,255,0.4)]"
-                  >
-                    {status === 'submitting' ? (
-                      'Sending Inquiry...'
-                    ) : (
-                      <>
-                        Launch Inquiry
-                        <Send className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
+                  {/* Sticky Bottom Action Bar with Gradient Overlay */}
+                  <div className="sticky bottom-0 left-0 right-0 pt-6 pb-2 bg-gradient-to-t from-zinc-950 via-zinc-950/90 to-transparent z-30 -mx-6 px-6 md:-mx-10 md:px-10 mt-6">
+                    <button
+                      type="submit"
+                      disabled={!formData.name || !formData.email || !formData.message || status === 'submitting'}
+                      className="w-full py-4 bg-white hover:bg-zinc-200 text-black font-semibold rounded-2xl flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-sm font-heading tracking-wide shadow-[inset_0_-2px_4px_0_rgba(255,255,255,0.4)]"
+                    >
+                      {status === 'submitting' ? (
+                        'Sending Inquiry...'
+                      ) : (
+                        <>
+                          Launch Inquiry
+                          <Send className="w-4 h-4" />
+                        </>
+                      )}
+                    </button>
+                  </div>
 
                   <div className="flex items-center my-4">
                     <div className="flex-grow border-t border-white/5"></div>

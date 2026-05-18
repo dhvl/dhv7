@@ -1272,7 +1272,8 @@ export default function Concept1() {
 
                         <button 
                           type="submit"
-                          className="w-full h-11 rounded-full font-bold text-xs sm:text-sm tracking-wide mt-4 bg-[#00C3FF] text-black hover:bg-[#FFE600] shadow-[inset_0_-2px_4px_0_rgba(255,255,255,0.4)] transition-all duration-300 flex items-center justify-center gap-2"
+                          disabled={!bookingForm.name || !bookingForm.email || !bookingForm.notes}
+                          className="w-full h-11 rounded-full font-bold text-xs sm:text-sm tracking-wide mt-4 bg-[#00C3FF] text-black hover:bg-[#FFE600] disabled:opacity-30 disabled:cursor-not-allowed shadow-[inset_0_-2px_4px_0_rgba(255,255,255,0.4)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
                         >
                           Confirm System Call Appointment <ArrowRight className="w-4 h-4" />
                         </button>
